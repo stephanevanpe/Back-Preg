@@ -11,7 +11,7 @@ const server = Hapi.server({
 
 exports.init = async () => {
   const sequelize = require("./db/connect");
-  await sequelize.sync();
+  await sequelize.sync({ force: true });
   await server.initialize();
   return server;
 };
