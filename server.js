@@ -9,6 +9,8 @@ const server = Hapi.server({
   host: "localhost"
 });
 
+server.route(require("./resources/measure/measure.route"));
+
 exports.init = async () => {
   const sequelize = require("./db/connect");
   await sequelize.sync({ force: true });
@@ -31,14 +33,6 @@ exports.start = async () => {
   console.log(`Server running at: ${server.info.uri}`);
   return server;
 };
-
-server.route({
-  method: "GET",
-  path: "/",
-  handler: function() {
-    return "Hello World!";
-  }
-});
 
 process.on("unhandledRejection", err => {
   console.log(err);
