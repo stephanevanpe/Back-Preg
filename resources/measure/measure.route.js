@@ -1,9 +1,11 @@
+const Measure = require("./measure.model");
+
 module.exports = [
   {
     method: "GET",
     path: "/measure",
     handler: (request, h) => {
-      return "Hello World!";
+      return Measure.findAll();
     }
   }
 ];

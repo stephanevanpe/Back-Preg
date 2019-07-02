@@ -28,7 +28,9 @@ describe("# Measurements", () => {
         method: "GET",
         url: "/measure"
       });
-      should(res.payload).equal([]);
+      const payload = JSON.parse(res.payload);
+      console.log("TCL: res.payload", res.payload);
+      should(payload).deepEqual([]);
     });
   });
 
