@@ -1,5 +1,7 @@
 "use strict";
 
+require("dotenv").config();
+
 const Hapi = require("@hapi/hapi");
 
 const server = Hapi.server({
@@ -8,11 +10,23 @@ const server = Hapi.server({
 });
 
 exports.init = async () => {
+  const sequelize = require("./db/connect");
+  await sequelize.sync();
   await server.initialize();
   return server;
 };
 
 exports.start = async () => {
+  const sequelize = require("./db/connect");
+  await sequelize.sync();
+  sequelize
+    .authenticate()
+    .then(() => {
+      console.log("Connection has been established successfully.");
+    })
+    .catch(err => {
+      console.error("Unable to connect to the database:", err);
+    });
   await server.start();
   console.log(`Server running at: ${server.info.uri}`);
   return server;
