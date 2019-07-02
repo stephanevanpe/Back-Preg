@@ -1,5 +1,6 @@
 const should = require("should");
 const { init } = require("../server");
+const Measure = require("../resources/measure/measure.model");
 
 describe("# Measurements", () => {
   let server;
@@ -29,7 +30,6 @@ describe("# Measurements", () => {
         url: "/measure"
       });
       const payload = JSON.parse(res.payload);
-      console.log("TCL: res.payload", res.payload);
       should(payload).deepEqual([]);
     });
   });
@@ -54,7 +54,8 @@ describe("# Measurements", () => {
         method: "GET",
         url: "/measure"
       });
-      should(res.payload).equal([measure1, measure2]);
+      const payload = JSON.parse(res.payload);
+      should(payload).match([measure1, measure2]);
     });
   });
 });
